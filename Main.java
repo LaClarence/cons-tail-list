@@ -43,6 +43,32 @@ public class Main {
     return list;
   }
 
+  static <T> Tail<T> filter(Tail<T> list, Predicate<T> op, Tail<T> filtered) {
+    return switch (list) {
+      case Nil _ -> filtered;
+      case Cons(var head, var tail) -> filter(tail, op,
+          op.test(head) ? append(filtered, head) : filtered);
+    };
+  }
+
+  static <T> Tail<T> concat(Tail<T> a, Tail<T> b) {
+    return switch (a) {
+      case Nil _ -> b;
+      case Cons(var head, var tail) -> Cons.of(head, concat(tail, b));
+    };
+  }
+
+  static Tail<Integer> quicksort(Tail<Integer> numbers) {
+    return switch (numbers) {
+      case Nil _ -> Nil.instance();
+      case Cons(var pivot, var tail) -> {
+        var petits = filter(tail, x -> x < pivot, Nil.instance());
+        var grands = filter(tail, x -> x >= pivot, Nil.instance());
+        yield concat(quicksort(petits), Cons.of(pivot, quicksort(grands)));
+      }
+    };
+  }
+
   void main() {
 
     Tail<Integer> list = Nil.instance();
@@ -53,6 +79,10 @@ public class Main {
     System.out.println("Somme = " + sum(list));
     System.out.println("Reverse = " + reverse(list).toTailString());
     System.out.println("Append 11 = " + append(list, 11).toTailString());
+    System.out.println("Filter odd = " + filter(list,  x -> x % 2  != 0, Nil.instance()).toTailString());
+    System.out.println("Quick sort = " + quicksort(list).toTailString());
+    System.out.println("Quick sort = " + quicksort(Cons.of(5,3,2,8,7,1,9,6,4)).toTailString());
+
 
     var camus = "🔠 L'absurde, c'est la raison lucide qui constate ses limites. 🚀";
     Tail<String> graphemeTail = Nil.instance();
