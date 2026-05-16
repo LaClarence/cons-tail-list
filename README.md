@@ -16,18 +16,13 @@ and my old CAML Light courses presented by Thérèse Hardin.
 
 The project is split into two modules: `cons.tail` (the library) and `app` (the demo).
 
-### Compile
+### Compilegit 
 
 ```bash
-javac -d out/cons.tail \
-  cons.tail/module-info.java \
-  cons.tail/cons/tail/Cons.java \
-  cons.tail/cons/tail/Nil.java \
-  cons.tail/cons/tail/Tail.java
-
-javac --module-path out -d out/app \
-  app/module-info.java \
-  app/app/Main.java
+rm -rf out 
+mkdir out
+javac -d out/cons.tail cons.tail/**/*.java
+javac --module-path out -d out/app/**/*.java
 ```
 
 ### Run
