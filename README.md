@@ -12,10 +12,26 @@ and my old CAML Light courses presented by Thérèse Hardin.
 
 ## Proposal
 
-`Main.java` demonstrates basic usage of the cons/tail list implementation using Java 25.
+`Main.java` demonstrates basic usage of the cons/tail list implementation using Java 25+.
 
+The project is split into two modules: `cons.tail` (the library) and `app` (the demo).
+
+### Compile
+
+```bash
+javac -d out/cons.tail \
+  cons.tail/module-info.java \
+  cons.tail/cons/tail/Cons.java \
+  cons.tail/cons/tail/Nil.java \
+  cons.tail/cons/tail/Tail.java
+
+javac --module-path out -d out/app \
+  app/module-info.java \
+  app/app/Main.java
 ```
-java Main.java
+
+### Run
+
+```bash
+java --module-path out -m app/app.Main
 ```
-
-
