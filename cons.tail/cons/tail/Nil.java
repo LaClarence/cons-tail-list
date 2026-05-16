@@ -1,3 +1,5 @@
+package cons.tail;
+
 public enum Nil implements Tail {
   INSTANCE;
 
@@ -5,5 +7,4 @@ public enum Nil implements Tail {
   public static <T> Tail<T> instance() {
     return (Tail<T>) INSTANCE;
   }
-
 }

@@ -1,3 +1,5 @@
+package cons.tail;
+
 import module java.base;
 
 public record Cons<T>(T head, Tail<T> tail) implements Tail<T> {

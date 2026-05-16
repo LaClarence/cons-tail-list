@@ -1,3 +1,5 @@
+package cons.tail;
+
 public sealed interface Tail<T> permits Cons, Nil {
 
   default String toTailString() {

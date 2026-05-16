@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir -p /Users/flejne/java-snippets-ws/cons-tail-list/cons.tail/cons/tail)",
+      "Bash(mkdir -p /Users/flejne/java-snippets-ws/cons-tail-list/app)"
+    ]
+  }
+}
