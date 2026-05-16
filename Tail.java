@@ -7,10 +7,10 @@ public sealed interface Tail<T> permits Cons, Nil {
   private String elements() {
     return switch (this) {
       case Nil _ -> "";
-      case Cons(var head, var tail) -> switch (tail) {
-        case Nil _ -> String.valueOf(head);
-        case Cons<T> _ -> String.valueOf(head) + ", " + tail.elements();
-      };
+      case Cons(var head, var tail) -> {
+        var rest = tail.elements();
+        yield rest.isEmpty() ? String.valueOf(head) : head + ", " + rest;
+      }
     };
   }
 }
