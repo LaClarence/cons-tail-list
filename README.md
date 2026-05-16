@@ -35,3 +35,9 @@ javac --module-path out -d out/app \
 ```bash
 java --module-path out -m app/app.Main
 ```
+
+or 
+
+```bash
+./run.sh
+```
