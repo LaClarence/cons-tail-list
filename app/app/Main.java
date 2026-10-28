@@ -1,21 +1,21 @@
 package app;
 
 import module java.base;
-import cons.tail.*;
+import cons.list.*;
 
 public class Main {
 
-  static Integer sum(Tail<Integer> list) {
-    return list.reduce(Integer::sum, 0);
+  static Integer sum(GenericList<Integer> list) {
+    return list.foldLeft(0, Integer::sum);
   }
 
-  static Tail<Integer> quicksort(Tail<Integer> numbers) {
+  static GenericList<Integer> quicksort(GenericList<Integer> numbers) {
     return switch (numbers) {
-      case Nil _ -> Nil.instance();
+      case Nil<Integer> _ -> GenericList.empty();
       case Cons(var pivot, var tail) -> {
         var petits = tail.filter(x -> x < pivot);
         var grands = tail.filter(x -> x >= pivot);
-        yield quicksort(petits).concat(Cons.of(pivot, quicksort(grands)));
+        yield quicksort(petits).append(new Cons<>(pivot, quicksort(grands)));
       }
     };
   }
@@ -34,21 +34,21 @@ public class Main {
 
   public static void main(String[] args) {
 
-    Tail<Integer> list = Nil.instance();
+    GenericList<Integer> list = GenericList.empty();
     for (var i = 10; i > 0; i--) {
-      list = Cons.of(i, list);
+      list = new Cons<>(i, list);
     }
-    System.out.println("Original    = " + list.toTailString());
+    System.out.println("Original    = " + list);
     System.out.println("Somme       = " + sum(list));
-    System.out.println("Reverse     = " + list.reverse().toTailString());
-    System.out.println("Append 11   = " + list.append(11).toTailString());
-    System.out.println("Filter odd  = " + list.filter(x -> x % 2 != 0).toTailString());
-    System.out.println("Quick sort  = " + quicksort(list).toTailString());
-    System.out.println("Quick sort  = " + quicksort(Cons.of(5, 3, 2, 8, 7, 1, 9, 6, 4)).toTailString());
+    System.out.println("Reverse     = " + list.rev());
+    System.out.println("Append 11   = " + list.append(GenericList.of(11)));
+    System.out.println("Filter odd  = " + list.filter(x -> x % 2 != 0));
+    System.out.println("Quick sort  = " + quicksort(list));
+    System.out.println("Quick sort  = " + quicksort(GenericList.of(5, 3, 2, 8, 7, 1, 9, 6, 4)));
 
     var camus = "🔠 L'absurde, c'est la raison lucide qui constate ses limites. 🚀";
-    Tail<String> graphemeTail = Nil.instance();
-    for (var g : graphemes(camus)) graphemeTail = Cons.of(g, graphemeTail);
-    System.out.println("Graphemes   = " + graphemeTail.reverse().toTailString());
+    GenericList<String> graphemeList = GenericList.empty();
+    for (var g : graphemes(camus)) graphemeList = new Cons<>(g, graphemeList);
+    System.out.println("Graphemes   = " + graphemeList.rev());
   }
 }

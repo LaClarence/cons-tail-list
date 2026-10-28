@@ -18,5 +18,5 @@ if [ "$JAVA_VERSION" != "$REQUIRED" ] || [ "$JAVAC_VERSION" != "$REQUIRED" ]; th
 fi
 
 rm -rf out
-javac --release $REQUIRED -d out --module-source-path . $(find cons.tail app -name "*.java")
+javac --release $REQUIRED -d out --module-source-path . $(find cons.list app -name "*.java")
 java --module-path out -m app/app.Main

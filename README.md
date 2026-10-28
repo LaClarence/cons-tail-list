@@ -1,16 +1,16 @@
-# OCaml-style Cons/Tail List in Java
+# OCaml-style Cons List in Java
 
 Inspired by [Functional Data Structures and Pattern Matching in Scala](https://medium.com/codex/functional-data-structures-and-pattern-matching-in-scala-7a379092e1e4)
 
-The `Main.java` files shows basic usage of the cons/tail list implementation using Java 27.
+The `Main.java` files shows basic usage of the cons list implementation using Java 27.
 
-The project is split into two modules: `cons.tail` (the library) and `app` (the demo).
+The project is split into two modules: `cons.list` (the library) and `app` (the demo).
 
 ## Compiling
 
 ```bash
 rm -rf out
-javac --release 27 -d out --module-source-path . $(find cons.tail app -name "*.java")
+javac --release 27 -d out --module-source-path . $(find cons.list app -name "*.java")
 ```
 
 `--module-source-path .` compiles both modules in one pass, in dependency order, into `out/<module>/`.
@@ -19,9 +19,9 @@ Each module is written as an *exploded module* (a plain directory of `.class` fi
 
 ```
 out/
-├── cons.tail/
+├── cons.list/
 │   ├── module-info.class
-│   └── cons/tail/Cons.class, Nil.class, Tail.class
+│   └── cons/list/Cons.class, GenericList.class, Nil.class
 └── app/
     ├── module-info.class
     └── app/Main.class

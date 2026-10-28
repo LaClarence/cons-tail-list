@@ -1,3 +1,3 @@
 module app {
-    requires cons.tail;
+    requires cons.list;
 }
