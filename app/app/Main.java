@@ -32,23 +32,25 @@ public class Main {
     return list;
   }
 
-  public static void main(String[] args) {
+  void main() {
 
     GenericList<Integer> list = GenericList.empty();
     for (var i = 10; i > 0; i--) {
       list = new Cons<>(i, list);
     }
-    System.out.println("Original    = " + list);
-    System.out.println("Somme       = " + sum(list));
-    System.out.println("Reverse     = " + list.rev());
-    System.out.println("Append 11   = " + list.append(GenericList.of(11)));
-    System.out.println("Filter odd  = " + list.filter(x -> x % 2 != 0));
-    System.out.println("Quick sort  = " + quicksort(list));
-    System.out.println("Quick sort  = " + quicksort(GenericList.of(5, 3, 2, 8, 7, 1, 9, 6, 4)));
+    IO.println("Original    = " + list);
+    IO.println("Somme       = " + sum(list));
+    IO.println("Reverse     = " + list.rev());
+    IO.println("Append 11   = " + list.append(GenericList.of(11)));
+    IO.println("Filter odd  = " + list.filter(x -> x % 2 != 0));
+    IO.println("Quick sort  = " + quicksort(list));
+    IO.println("Quick sort  = " + quicksort(GenericList.of(5, 3, 2, 8, 7, 1, 9, 6, 4)));
 
     var camus = "🔠 L'absurde, c'est la raison lucide qui constate ses limites. 🚀";
     GenericList<String> graphemeList = GenericList.empty();
-    for (var g : graphemes(camus)) graphemeList = new Cons<>(g, graphemeList);
-    System.out.println("Graphemes   = " + graphemeList.rev());
+    for (var g : graphemes(camus)) {
+      graphemeList = new Cons<>(g, graphemeList);
+    }
+    IO.println("Graphemes   = " + graphemeList.rev());
   }
 }
