@@ -6,7 +6,7 @@ The `Main.java` files shows basic usage of the cons/tail list implementation usi
 
 The project is split into two modules: `cons.tail` (the library) and `app` (the demo).
 
-## Compiling 
+## Compiling
 
 ```bash
 rm -rf out
@@ -14,6 +14,20 @@ javac --release 27 -d out --module-source-path . $(find cons.tail app -name "*.j
 ```
 
 `--module-source-path .` compiles both modules in one pass, in dependency order, into `out/<module>/`.
+
+Each module is written as an *exploded module* (a plain directory of `.class` files, not a jar):
+
+```
+out/
+├── cons.tail/
+│   ├── module-info.class
+│   └── cons/tail/Cons.class, Nil.class, Tail.class
+└── app/
+    ├── module-info.class
+    └── app/Main.class
+```
+
+`java --module-path out` accepts these directories just like modular jars.
 
 ## Running
 
@@ -26,3 +40,9 @@ or
 ```bash
 ./run.sh
 ```
+
+`run.sh` does the whole cycle:
+
+1. Checks that both `java` and `javac` are version 27, otherwise prints an error and stops.
+2. Deletes `out/` and compiles both modules into it (see [Compiling](#compiling)).
+3. Runs `app/app.Main` from the module path.
