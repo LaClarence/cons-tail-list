@@ -32,17 +32,26 @@ public class Main {
     return list;
   }
 
-  void main() {
+  static boolean isOdd(int x) {
+    return x % 2 == 1;
+  }
 
+  static Predicate<Integer> greaterThan(int n) {
+    return x -> x > n;
+  }
+
+  void main() {
     GenericList<Integer> list = GenericList.empty();
-    for (var i = 10; i > 0; i--) {
+    for (var i = 15; i > 0; i--) {
       list = new Cons<>(i, list);
     }
     IO.println("Original    = " + list);
     IO.println("Somme       = " + sum(list));
     IO.println("Reverse     = " + list.rev());
     IO.println("Append 11   = " + list.append(GenericList.of(11)));
-    IO.println("Filter odd  = " + list.filter(x -> x % 2 != 0));
+    Predicate<Integer> select = Main::isOdd;
+    select = select.and(greaterThan(5));
+    IO.println("Filter odd  = " + list.filter(select));
     IO.println("Quick sort  = " + quicksort(list));
     IO.println("Quick sort  = " + quicksort(GenericList.of(5, 3, 2, 8, 7, 1, 9, 6, 4)));
 

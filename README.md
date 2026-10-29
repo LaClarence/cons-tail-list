@@ -52,24 +52,24 @@ or
 `Main.java` prints:
 
 ```
-Original    = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
-Somme       = 55
-Reverse     = {10, 9, 8, 7, 6, 5, 4, 3, 2, 1}
-Append 11   = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}
-Filter odd  = {1, 3, 5, 7, 9}
-Quick sort  = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+Original    = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15}
+Somme       = 120
+Reverse     = {15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1}
+Append 11   = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 11}
+Filter odd  = {7, 9, 11, 13, 15}
+Quick sort  = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15}
 Quick sort  = {1, 2, 3, 4, 5, 6, 7, 8, 9}
 Graphemes   = {🔠,  , L, ', a, b, s, u, r, d, e, ,,  , c, ', e, s, t, ...,  , 🚀}
 ```
 
 Line by line:
 
-- **Original**: builds the list by consing `10`, `9`, … `1` onto `GenericList.empty()`, like `1 :: 2 :: … :: []` in OCaml.
+- **Original**: builds the list by consing `15`, `14`, … `1` onto `GenericList.empty()`, like `1 :: 2 :: … :: []` in OCaml.
 - **Somme**: sums the elements with `foldLeft(0, Integer::sum)`.
 - **Reverse**: `rev()`, itself a `foldLeft` that conses each element onto a new list.
 - **Append 11**: `append(GenericList.of(11))` joins two lists, like OCaml's `@`.
-- **Filter odd**: `filter` keeps the elements matching a predicate.
+- **Filter odd**: `filter` keeps the elements matching a predicate, here odd numbers greater than 5. The predicate combines `Main::isOdd` with `greaterThan(5)` using `Predicate.and`; `greaterThan(n)` returns a `Predicate<Integer>`, like a partial application `greater_than 5` in OCaml.
 - **Quick sort**: a recursive quicksort written with a pattern-matching `switch`: `case Nil` for the empty list, `case Cons(var pivot, var tail)` to split head from tail, as in OCaml's `match … with [] -> … | pivot :: tail -> …`. It runs on the list above, then on the unsorted `GenericList.of(5, 3, 2, 8, 7, 1, 9, 6, 4)`.
 - **Graphemes**: splits a quote from Camus into user-perceived characters with `BreakIterator` (so the emojis stay whole), conses them onto a `GenericList<String>`, which builds it backwards, then `rev()` restores the order.
 
-The lists are immutable: every operation returns a new list, so `Reverse`, `Append 11`, `Filter odd` and the first `Quick sort` all start from the same original `{1, …, 10}`.
+The lists are immutable: every operation returns a new list, so `Reverse`, `Append 11`, `Filter odd` and the first `Quick sort` all start from the same original `{1, …, 15}`.
