@@ -17,17 +17,34 @@ public sealed interface GenericList<T> permits Cons, Nil {
     return result;
   }
 
+  // Iterative folds: constant stack depth, safe for long lists.
+
   default <R> R foldLeft(R acc, BiFunction<R, T, R> f) {
-    return switch (this) {
-      case Nil<T> _ -> acc;
-      case Cons(var head, var tail) -> tail.foldLeft(f.apply(acc, head), f);
-    };
+    var current = this;
+    while (current instanceof Cons(var head, var tail)) {
+      acc = f.apply(acc, head);
+      current = tail;
+    }
+    return acc;
   }
 
   default <R> R foldRight(R acc, BiFunction<T, R, R> f) {
+    return rev().foldLeft(acc, (r, x) -> f.apply(x, r));
+  }
+
+  // Recursive folds: same results, closest to OCaml, but limited by the stack depth.
+
+  default <R> R foldLeftRec(R acc, BiFunction<R, T, R> f) {
     return switch (this) {
       case Nil<T> _ -> acc;
-      case Cons(var head, var tail) -> f.apply(head, tail.foldRight(acc, f));
+      case Cons(var head, var tail) -> tail.foldLeftRec(f.apply(acc, head), f);
+    };
+  }
+
+  default <R> R foldRightRec(R acc, BiFunction<T, R, R> f) {
+    return switch (this) {
+      case Nil<T> _ -> acc;
+      case Cons(var head, var tail) -> f.apply(head, tail.foldRightRec(acc, f));
     };
   }
 

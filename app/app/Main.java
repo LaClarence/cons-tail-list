@@ -61,5 +61,23 @@ public class Main {
       graphemeList = new Cons<>(g, graphemeList);
     }
     IO.println("Graphemes   = " + graphemeList.rev());
+
+    var small = GenericList.of(1, 2, 3);
+    BiFunction<String, Integer, String> left = (acc, x) -> "(" + acc + " + " + x + ")";
+    BiFunction<Integer, String, String> right = (x, acc) -> "(" + x + " + " + acc + ")";
+    IO.println("Left iter   = " + small.foldLeft("0", left));
+    IO.println("Left rec    = " + small.foldLeftRec("0", left));
+    IO.println("Right iter  = " + small.foldRight("0", right));
+    IO.println("Right rec   = " + small.foldRightRec("0", right));
+
+    var big = GenericList.of(IntStream.rangeClosed(1, 1_000_000).boxed().toArray(Integer[]::new));
+    IO.println("Big iter    = " + big.foldLeft(0L, (acc, x) -> acc + x));
+    String recResult;
+    try {
+      recResult = String.valueOf(big.foldLeftRec(0L, (acc, x) -> acc + x));
+    } catch (StackOverflowError e) {
+      recResult = "StackOverflowError";
+    }
+    IO.println("Big rec     = " + recResult);
   }
 }
